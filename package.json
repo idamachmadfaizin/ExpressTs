@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/www.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:build": "node ./build/www.js",
+    "build": "tsc",
+    "tslint": "tslint --project tsconfig.json"
   },
   "keywords": [],
   "author": "",
