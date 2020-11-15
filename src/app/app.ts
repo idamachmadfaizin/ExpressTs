@@ -1,10 +1,17 @@
 import express from 'express';
 import { errorHandler } from './http/middleware/error/error-handler';
 import { router } from './router';
+import logger from 'morgan';
+import path from 'path';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
+app.use(logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 router(app);
 

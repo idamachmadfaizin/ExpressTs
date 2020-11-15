@@ -7,7 +7,7 @@ export function router(app: core.Express) {
   const prefix = `/api/${ver}`;
 
   app.get(`${prefix}/`, (req: Request, res: Response) =>
-    res.send('Express + TypeScript2 Server is awesome!!!')
+    res.send('Express + TypeScript2 Server is awesome!!!'),
   );
   app.use(`${prefix}/auth`, authRouter);
 }

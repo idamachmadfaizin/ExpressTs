@@ -1,12 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { AuthService } from '../services/auth-service';
-import { environment } from './../../../config/environment';
-import USER from './../../models/database/user';
-
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import {
+  getRefreshTokenCookie,
+  setRefreshTokenCookie,
+} from '../../helpers/cookies.helper';
+import USER from '../../models/database/user.database';
+import { BaseResponse } from '../../models/response/base-response.model';
+import { BadRequest } from '../middleware/error/bad-request';
 import { Unauthorized } from '../middleware/error/unauthorized';
+import { AuthService } from '../services/auth-service';
 
 export class AuthController {
   /**
@@ -17,19 +19,48 @@ export class AuthController {
    */
   public static async login(req: Request, res: Response, next: NextFunction) {
     try {
-      /** Check email exist */
-      const userExist = await AuthService.checkEmailExist(req.body.email) as any;
-      if (!userExist)
-        throw new Unauthorized('Email not found');
+      const ipAddress = req.ip;
+      const { email, password, isRemember } = req.body;
+      if (!email && !password)
+        throw new BadRequest('Email and password is required!');
 
-      /** Check password */
-      const passwordValid = bcrypt.compareSync(req.body.password, userExist.password);
-      if (!passwordValid)
-        throw new Unauthorized('Invalid password');
+      const authData = await AuthService.authenticateAsync(
+        email,
+        password,
+        ipAddress,
+      );
+      if (!authData) throw new Unauthorized('Email or password is invalid!');
 
-      /** Create JWT */
-      const token = jwt.sign({ user: userExist._id }, environment.TOKEN_SECRET);
-      res.status(StatusCodes.OK).json(token);
+      setRefreshTokenCookie(res, authData);
+
+      return res.json(
+        new BaseResponse({ token: authData.token }, 'Login Success'),
+      );
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   * Refresh token
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async refresh(req: Request, res: Response, next: NextFunction) {
+    try {
+      const refreshToken = getRefreshTokenCookie(req);
+      const ipAddress = req.ip;
+      if (!refreshToken) throw new BadRequest('Refresh Token Required');
+
+      const authData = await AuthService.refreshTokenAsync(
+        refreshToken,
+        ipAddress,
+      );
+      if (!authData) throw new Unauthorized('Unauthorize');
+
+      setRefreshTokenCookie(res, authData.refreshToken);
+      return res.json({ token: authData.token });
     } catch (err) {
       next(err);
     }
@@ -41,12 +72,15 @@ export class AuthController {
    * @param res
    * @param next
    */
-  public static async register(req: Request, res: Response, next: NextFunction) {
+  public static async register(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
     try {
       /** Check email exist */
-      const userExist = await AuthService.checkEmailExist(req.body.email) as any;
-      if (userExist)
-        throw new Unauthorized('Email already exists!');
+      const userExist = await AuthService.checkEmailExist(req.body.email);
+      if (userExist) throw new Unauthorized('Email already exists!');
 
       const user = new USER(req.body);
       const savedUser = await user.save();
