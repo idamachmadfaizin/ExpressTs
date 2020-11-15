@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi, { ValidationOptions } from 'joi';
-import { getRoleEnum, roleEnum } from '../../../enumeration/role-enum';
+import { getRoleEnum, roleEnum } from '../../../enumeration/role.enum';
 import { validateRequestHelper } from '../../../helpers/validate-request-helper';
 
 export function userCreateValidator(req: Request, res: Response, next: NextFunction) {

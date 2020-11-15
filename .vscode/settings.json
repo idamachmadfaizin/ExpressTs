@@ -1,5 +1,9 @@
 {
     "editor.tabSize": 2,
     "typescript.preferences.quoteStyle": "single",
-    "typescript.validate.enable": true
+    "typescript.validate.enable": true,
+    "javascript.preferences.quoteStyle": "single",
+    "prettier.singleQuote": true,
+    "prettier.jsxSingleQuote": true,
+    "prettier.trailingComma": "all"
 }
