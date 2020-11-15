@@ -1,10 +1,16 @@
 import express from 'express';
-import router from './router';
+import { errorHandler } from './http/middleware/error/error-handler';
+import { router } from './router';
 
 const app = express();
 
 app.use(express.json());
 
-app.use(`/`, router);
+router(app);
+
+/**
+ * Error Handler
+ */
+app.use(errorHandler);
 
 export default app;
