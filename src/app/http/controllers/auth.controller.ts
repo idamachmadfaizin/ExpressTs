@@ -1,14 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import {
-  getRefreshTokenCookie,
-  setRefreshTokenCookie,
-} from '../../helpers/cookies.helper';
+import { CookiesHelper } from '../../helpers/cookies.helper';
 import USER from '../../models/database/user.database';
 import { BaseResponse } from '../../models/response/base-response.model';
 import { BadRequest } from '../middleware/error/bad-request';
 import { Unauthorized } from '../middleware/error/unauthorized';
-import { AuthService } from '../services/auth-service';
+import { AuthService } from '../services/auth.service';
 
 export class AuthController {
   /**
@@ -31,7 +28,7 @@ export class AuthController {
       );
       if (!authData) throw new Unauthorized('Email or password is invalid!');
 
-      setRefreshTokenCookie(res, authData);
+      CookiesHelper.setRefreshToken(res, authData.refreshToken);
 
       return res.json(
         new BaseResponse({ token: authData.token }, 'Login Success'),
@@ -49,7 +46,7 @@ export class AuthController {
    */
   public static async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const refreshToken = getRefreshTokenCookie(req);
+      const refreshToken = CookiesHelper.getRefreshToken(req);
       const ipAddress = req.ip;
       if (!refreshToken) throw new BadRequest('Refresh Token Required');
 
@@ -59,7 +56,8 @@ export class AuthController {
       );
       if (!authData) throw new Unauthorized('Unauthorize');
 
-      setRefreshTokenCookie(res, authData.refreshToken);
+      CookiesHelper.setRefreshToken(res, authData.refreshToken);
+
       return res.json({ token: authData.token });
     } catch (err) {
       next(err);

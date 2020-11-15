@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
-import { validateRequestHelper } from '../../../helpers/validate-request-helper';
+import { validateRequestHelper } from '../../../helpers/validate-request.helper';
 
 export function loginValidator(req: Request, res: Response, next: NextFunction) {
   const schema = Joi.object(

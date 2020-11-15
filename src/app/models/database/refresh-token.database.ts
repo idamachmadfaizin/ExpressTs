@@ -1,3 +1,4 @@
+import { ITimestamps } from './../interfaces/timestamps.interface';
 import { number } from 'joi';
 import { Document, model, Schema } from 'mongoose';
 import { IUser } from './user.database';
@@ -32,7 +33,7 @@ refreshTokenSchema.virtual('isActive').get(function (this: IRefreshToken) {
   return !this.revoked && !this.isExpired;
 });
 
-interface IRefreshToken extends Document {
+export interface IRefreshToken extends ITimestamps, Document {
   user: IUser;
   token: string;
   expires: number;

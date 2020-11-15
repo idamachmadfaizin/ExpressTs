@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { loginValidator, registerValidator } from '../http/middleware/validators/auth-validator';
-import { AuthController } from './../http/controllers/auth-controller';
+import { loginValidator, registerValidator } from '../http/middleware/validators/auth.validator';
+import { AuthController } from '../http/controllers/auth.controller';
 
 const authRouter = Router();
 

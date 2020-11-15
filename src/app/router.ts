@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as core from 'express-serve-static-core';
-import authRouter from './routes/auth-route';
+import authRouter from './routes/auth.route';
 
 export function router(app: core.Express) {
   const ver = '1.0';
