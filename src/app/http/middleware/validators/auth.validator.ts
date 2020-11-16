@@ -8,6 +8,7 @@ export function loginValidator(req: Request, res: Response, next: NextFunction) 
     {
       email: Joi.string().required(),
       password: Joi.string().required(),
+      isRemember: Joi.boolean().required().default(false),
     },
   );
 
