@@ -1,12 +1,25 @@
-import { Application, Request, Response } from 'express';
+import { Application, Router } from 'express';
+import { environment } from './../config/environment';
 import authRouter from './routes/auth.route';
+import indexRouter from './routes/index.route';
 
-export function router(app: Application) {
-  const ver = '1.0';
-  const prefix = `/api/${ver}`;
+/**
+ * Register your routes in HERE
+ */
+const registerRoutes: [string, Router][] = [
+  ['/', indexRouter],
+  ['/auth', authRouter],
+];
 
-  app.get(`${prefix}/`, (req: Request, res: Response) =>
-    res.send('Express + TypeScript2 Server is awesome!!!'),
-  );
-  app.use(`${prefix}/auth`, authRouter);
+/**
+ * Register all router to application
+ * @param app Application
+ */
+export function routers(app: Application) {
+  const prefix = `/api/${environment.APP_VERSION}`;
+
+  registerRoutes.forEach((each) => {
+    const [url, router] = each;
+    app.use(prefix + url, router);
+  });
 }

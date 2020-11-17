@@ -1,10 +1,10 @@
+import cookieParser from 'cookie-parser';
 import express, { Application } from 'express';
-import { errorHandler } from './http/middleware/error/error-handler';
-import { router } from './router';
+import helmet from 'helmet';
 import logger from 'morgan';
 import path from 'path';
-import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
+import { errorHandler } from './http/middleware/error/error-handler';
+import { routers } from './router';
 
 const app: Application = express();
 
@@ -15,7 +15,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-router(app);
+/**
+ * Call function to register routers
+ */
+routers(app);
 
 /**
  * Error Handler
