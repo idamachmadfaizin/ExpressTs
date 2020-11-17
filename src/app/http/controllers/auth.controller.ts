@@ -91,7 +91,7 @@ export class AuthController {
       const savedUser = await user.save();
 
       res
-        .status(StatusCodes.OK)
+        .status(StatusCodes.CREATED)
         .json(new BaseResponse({ user: savedUser._id }, 'Register success'));
     } catch (err) {
       next(err);
