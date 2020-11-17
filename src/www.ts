@@ -1,7 +1,7 @@
 import { Database } from './config/database';
 import { debug } from 'console';
 import http from 'http';
-import { app } from './app/app';
+import app from './app/app';
 
 const port = normalizePort(3000);
 app.set('port', port);

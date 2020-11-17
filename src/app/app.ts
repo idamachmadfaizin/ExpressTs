@@ -6,7 +6,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
-export const app: Application = express();
+const app: Application = express();
 
 app.use(logger('dev'));
 app.use(helmet());
@@ -22,4 +22,4 @@ router(app);
  */
 app.use(errorHandler);
 
-// export default app;
+export default app;

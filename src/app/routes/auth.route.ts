@@ -10,4 +10,3 @@ authRouter.post(`/refresh`, AuthController.refresh);
 authRouter.post(`/revoke`, AuthController.revoke);
 
 export default authRouter;
-// export function authRoute() { return router; }
