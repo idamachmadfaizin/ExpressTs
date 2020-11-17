@@ -20,6 +20,8 @@ export class Database {
  */
 function mongodb() {
   const url = environment.DB_HOST;
+  if (!url) throw new Error('DB is required in .env file');
+
   mongoose.connect(
     url,
     { useNewUrlParser: true, useUnifiedTopology: true },
