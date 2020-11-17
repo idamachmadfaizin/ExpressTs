@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Application } from 'express';
 import { errorHandler } from './http/middleware/error/error-handler';
 import { router } from './router';
 import logger from 'morgan';
@@ -6,7 +6,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
-const app = express();
+export const app: Application = express();
 
 app.use(logger('dev'));
 app.use(helmet());
@@ -22,4 +22,4 @@ router(app);
  */
 app.use(errorHandler);
 
-export default app;
+// export default app;
