@@ -12,7 +12,7 @@ import ms from 'ms';
 import { environment } from '../../../config/environment';
 import REFRESH_TOKEN from '../../models/database/refresh-token.database';
 import USER, { IUser } from '../../models/database/user.database';
-import { ILogin } from '../../models/interfaces/login.interface';
+import { ILogin } from '../../models/interfaces/request/auth.interface';
 import { Unauthorized } from '../middleware/error/unauthorized';
 
 export class AuthService {
