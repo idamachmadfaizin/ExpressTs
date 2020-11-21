@@ -1,12 +1,17 @@
-import { StringHelper } from './string.helper';
-import { IRefreshToken } from './../models/database/refresh-token.database';
+/**
+ * Cookies Helper
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:39:44
+ */
+
 import { CookieOptions, Request, Response } from 'express';
 import { environment } from '../../config/environment';
-import { date } from 'joi';
+import { IRefreshToken } from './../models/database/refresh-token.database';
+import { StringHelper } from './string.helper';
 
 export class CookiesHelper {
   /**
-   *
+   * Set Refresh token
    * @param res Response
    * @param refreshToken IRefreshToken
    */
@@ -27,7 +32,7 @@ export class CookiesHelper {
   }
 
   /**
-   * Get Refresh Token from cookies
+   * Get Refresh Token
    * @param req Request
    * @param cookieOrBody if True: find from cookies, is null then find in body
    */

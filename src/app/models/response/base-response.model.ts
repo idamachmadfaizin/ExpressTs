@@ -1,3 +1,9 @@
+/**
+ * Base response class
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:58:51
+ */
+
 import { IResponse } from './response.interface';
 
 export class BaseResponse<T> implements IResponse<T> {

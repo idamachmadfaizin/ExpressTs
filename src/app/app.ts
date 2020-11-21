@@ -1,3 +1,9 @@
+/**
+ * Application configurations
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 22:01:29
+ */
+
 import cookieParser from 'cookie-parser';
 import express, { Application } from 'express';
 import helmet from 'helmet';

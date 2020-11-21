@@ -1,3 +1,9 @@
+/**
+ * Register all router in hire
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 22:01:48
+ */
+
 import { Application, Router } from 'express';
 import { environment } from './../config/environment';
 import authRouter from './routes/auth.route';

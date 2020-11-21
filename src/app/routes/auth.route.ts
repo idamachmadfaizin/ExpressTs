@@ -1,3 +1,9 @@
+/**
+ * Authentication router
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 22:01:00
+ */
+
 import { Router } from 'express';
 import { AuthController } from '../http/controllers/auth.controller';
 import { loginValidator, registerValidator } from '../http/middleware/validators/auth.validator';

@@ -1,3 +1,9 @@
+/**
+ * Authentication Controller
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:44:39
+ */
+
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CookiesHelper } from '../../helpers/cookies.helper';

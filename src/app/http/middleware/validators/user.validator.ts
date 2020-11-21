@@ -1,8 +1,19 @@
+/**
+ * User request validator
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:52:32
+ */
+
 import { NextFunction, Request, Response } from 'express';
-import Joi, { ValidationOptions } from 'joi';
-import { getRoleEnum, roleEnum } from '../../../enumeration/role.enum';
+import Joi from 'joi';
 import { validateRequestHelper } from '../../../helpers/validate-request.helper';
 
+/**
+ * Create user request validator
+ * @param req Request
+ * @param res Response
+ * @param next NextFunction
+ */
 export function userCreateValidator(req: Request, res: Response, next: NextFunction) {
   const schema = Joi.object(
     {
@@ -16,6 +27,12 @@ export function userCreateValidator(req: Request, res: Response, next: NextFunct
   validateRequestHelper(req, res, next, schema);
 }
 
+/**
+ * Update user request validator
+ * @param req Request
+ * @param res Response
+ * @param next NextFunction
+ */
 export function userUpdateValidator(req: Request, res: Response, next: NextFunction) {
   const schema = Joi.object(
     {

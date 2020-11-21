@@ -1,7 +1,19 @@
+/**
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:42:37
+ */
+
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ObjectSchema, ValidationOptions } from 'joi';
 
+/**
+ * Joi validation request helper
+ * @param req Request
+ * @param res Response
+ * @param next NextFunction
+ * @param schema Model scheme
+ */
 export function validateRequestHelper(
   req: Request, res: Response, next: NextFunction, schema: ObjectSchema,
 ) {

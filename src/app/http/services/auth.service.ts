@@ -1,3 +1,9 @@
+/**
+ * Authentication service
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:55:04
+ */
+
 import bcrypt from 'bcrypt';
 import CryptoJS, { lib } from 'crypto-js';
 import jwt from 'jsonwebtoken';

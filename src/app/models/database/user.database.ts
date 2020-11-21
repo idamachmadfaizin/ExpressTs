@@ -1,3 +1,9 @@
+/**
+ * User database model
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:56:17
+ */
+
 import { Document, model, Schema } from 'mongoose';
 import { ITimestamps } from '../interfaces/timestamps.interface';
 

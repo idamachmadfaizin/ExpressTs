@@ -1,6 +1,11 @@
-import { ITimestamps } from './../interfaces/timestamps.interface';
-import { number } from 'joi';
+/**
+ * Refresh token database model
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:55:56
+ */
+
 import { Document, model, Schema } from 'mongoose';
+import { ITimestamps } from './../interfaces/timestamps.interface';
 import { IUser } from './user.database';
 
 const refreshTokenSchema = new Schema(

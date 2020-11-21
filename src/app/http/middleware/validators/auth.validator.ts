@@ -1,8 +1,20 @@
+/**
+ * Authorization request validator
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:49:37
+ */
+
 import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import { validateRequestHelper } from '../../../helpers/validate-request.helper';
 
+/**
+ * Login request validator
+ * @param req Request
+ * @param res Response
+ * @param next NextFunction
+ */
 export function loginValidator(req: Request, res: Response, next: NextFunction) {
   const schema = Joi.object(
     {
@@ -15,6 +27,12 @@ export function loginValidator(req: Request, res: Response, next: NextFunction) 
   validateRequestHelper(req, res, next, schema);
 }
 
+/**
+ * Register request validator
+ * @param req Request
+ * @param res Response
+ * @param next NextFunction
+ */
 export function registerValidator(req: Request, res: Response, next: NextFunction) {
   const schema = Joi.object(
     {
