@@ -6,12 +6,12 @@
 
 import { Router } from 'express';
 import { AuthController } from '../http/controllers/auth.controller';
-import { loginValidator, registerValidator } from '../http/middleware/validators/auth.validator';
+import { AuthValidator } from '../http/middleware/validators';
 
 const authRouter = Router();
 
-authRouter.post(`/register`, registerValidator, AuthController.register);
-authRouter.post(`/login`, loginValidator, AuthController.login);
+authRouter.post(`/register`, AuthValidator.register, AuthController.register);
+authRouter.post(`/login`, AuthValidator.login, AuthController.login);
 authRouter.post(`/refresh`, AuthController.refresh);
 authRouter.post(`/revoke`, AuthController.revoke);
 
