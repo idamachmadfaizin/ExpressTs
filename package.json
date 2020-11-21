@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/www.ts",
+    "start": "nodemon ./src/www.ts | bunyan",
     "start:build": "node ./build/www.js",
     "build": "del-cli --force ./build && tsc",
     "tslint": "tslint --project tsconfig.json",
@@ -13,8 +13,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "nodemonConfig": {
+    "ignore": ["tests/*"]
+  },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bunyan": "^1.8.14",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "crypto-js": "^4.0.0",
@@ -33,6 +37,7 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.12.1",
     "@types/bcrypt": "^3.0.0",
+    "@types/bunyan": "^1.8.6",
     "@types/cookie-parser": "^1.4.2",
     "@types/crypto-js": "^4.0.1",
     "@types/express": "^4.17.9",

@@ -1,7 +1,12 @@
-import { Database } from './config/database';
+/**
+ * @author Idam Achmad Faizin
+ * @date 2020-11-21 21:29:32
+ */
+
 import { debug } from 'console';
 import http from 'http';
 import app from './app/app';
+import { Database } from './config/database';
 
 const port = normalizePort(3000);
 app.set('port', port);
