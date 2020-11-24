@@ -12,7 +12,6 @@ const userSchema = new Schema(
     name: { type: String, required: true, min: 4, max: 128 },
     email: { type: String, required: true, min: 8, max: 128 },
     password: { type: String, required: true, min: 8 },
-    // books: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
   },
   {
     timestamps: true,
