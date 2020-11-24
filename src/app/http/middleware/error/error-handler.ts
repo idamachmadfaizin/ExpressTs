@@ -3,9 +3,9 @@
  * @author Idam Achmad Faizin
  * @date 2020-11-21 21:45:29
  */
-
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import LogHelper from '../../../helpers/log.helper';
 import { BaseResponse } from '../../../models/response/base-response.model';
 import { BadRequest } from './bad-request';
 import { GeneralError } from './general-error';
@@ -20,11 +20,20 @@ import { Unauthorized } from './unauthorized';
  * @param next NextFunction
  * @return BaseResponse
  */
-export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+export function errorHandler(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  LogHelper.error(err);
   if (err instanceof GeneralError) {
-    return res.status(getCode(err)).json(new BaseResponse(null, `Error: ${err.message}`));
+    return res
+      .status(getCode(err))
+      .json(new BaseResponse(null, `Error: ${err.message}`));
   }
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+  return res
+    .status(StatusCodes.INTERNAL_SERVER_ERROR)
     .json(new BaseResponse(null, `Error: ${err.message}`));
 }
 
