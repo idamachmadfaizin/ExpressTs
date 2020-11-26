@@ -7,8 +7,16 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CookiesHelper } from '../../helpers/cookies.helper';
-import USER from '../../models/database/user.database';
-import { ILogin, IRegister } from '../../models/interfaces/request/auth.interface';
+import ROLE from '../../models/database/role.database';
+import USER_HAS_ROLES, {
+  IUserHasRoles,
+} from '../../models/database/user-has-roles.database';
+import USER, { IUser } from '../../models/database/user.database';
+import {
+  IAssignRole,
+  ILogin,
+  IRegister,
+} from '../../models/interfaces/request/auth.interface';
 import { BaseResponse } from '../../models/response/base-response.model';
 import { BadRequest } from '../middleware/error/bad-request';
 import { Unauthorized } from '../middleware/error/unauthorized';
@@ -129,6 +137,37 @@ export class AuthController {
             revoked ? 'Revoke Success' : 'Already revoked',
           ),
         );
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   * Assign roles to a user
+   * @param req Request
+   * @param res Response
+   * @param next NextFunction
+   */
+  public static async assignRoles(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const assignRoleReq: IAssignRole = req.body;
+      const userRolesIds = await AuthService.assignRolesAsync(assignRoleReq);
+
+      if (!userRolesIds)
+        return res.json(
+          new BaseResponse({ userHasRoles: [] }, 'Roles already assigned'),
+        );
+
+      return res.json(
+        new BaseResponse(
+          { userHasRoles: userRolesIds },
+          'Roles successfully assigned',
+        ),
+      );
     } catch (err) {
       next(err);
     }

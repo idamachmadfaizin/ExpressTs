@@ -4,9 +4,9 @@
  * @date 2020-11-21 21:57:26
  */
 
- /**
-  * Interface login request
-  */
+/**
+ * Interface login request
+ */
 export interface ILogin {
   email: string;
   password: string;
@@ -21,4 +21,12 @@ export interface IRegister {
   email: string;
   password: string;
   confirmPassword: string;
+}
+
+/**
+ * Interface assign roles to a user
+ */
+export interface IAssignRole {
+  userId: string;
+  roles: string[];
 }

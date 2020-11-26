@@ -11,8 +11,14 @@ import moment from 'moment';
 import ms from 'ms';
 import { environment } from '../../../config/environment';
 import REFRESH_TOKEN from '../../models/database/refresh-token.database';
+import ROLE from '../../models/database/role.database';
+import USER_HAS_ROLES from '../../models/database/user-has-roles.database';
 import USER, { IUser } from '../../models/database/user.database';
-import { ILogin } from '../../models/interfaces/request/auth.interface';
+import {
+  IAssignRole,
+  ILogin,
+} from '../../models/interfaces/request/auth.interface';
+import { BadRequest } from '../middleware/error/bad-request';
 import { Unauthorized } from '../middleware/error/unauthorized';
 
 export class AuthService {
@@ -109,6 +115,56 @@ export class AuthService {
     existRefresh.revokedByIp = ipAddress;
     existRefresh.save();
     return true;
+  }
+
+  /**
+   * Assign new roles to user
+   * @param assignRoles IAssignRole
+   */
+  public static async assignRolesAsync(assignRoles: IAssignRole) {
+    if (!assignRoles || !assignRoles?.userId || assignRoles?.roles?.length === 0)
+      throw new BadRequest();
+
+    /** Check exist user */
+    const existUser = await USER.findById(assignRoles.userId);
+    if (!existUser) throw new BadRequest('User notfound');
+
+    /** Get roles by role name */
+    const roles = await ROLE.find({ name: { $in: assignRoles.roles } });
+    if (!roles || roles?.length === 0) throw new BadRequest('Roles notfound');
+
+    /** Get exist userHasRoles by userId */
+    const existUserRoles = await USER_HAS_ROLES.find({
+      user: { _id: assignRoles.userId } as IUser,
+    }).populate('role');
+
+    //#region Get only not assigned role from incoming data
+    const existRoleIds = existUserRoles.map((x) => {
+      return x.role.id;
+    });
+    const incomeRoleIds = roles.map((x) => {
+      return x.id;
+    });
+    const newRoleIds = incomeRoleIds.filter((x) => {
+      return !existRoleIds.includes(x);
+    });
+    //#endregion
+
+    /** mapping to userHasRoles model */
+    const insertUserRoles = newRoleIds.map((id) => {
+      return {
+        user: assignRoles.userId,
+        role: id,
+      };
+    });
+    if (!insertUserRoles || insertUserRoles.length === 0)
+      return null;
+
+    const inserted = await USER_HAS_ROLES.insertMany(insertUserRoles);
+    const userRolesIds = inserted.map((data) => {
+      return String(data.id);
+    });
+    return userRolesIds;
   }
 
   /**

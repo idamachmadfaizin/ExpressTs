@@ -48,4 +48,20 @@ export class AuthValidator {
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     req.body.password = hashedPassword;
   }
+
+  /**
+   * Assign roles to a user validator
+   * @param req Request
+   * @param res Response
+   * @param next NextFunction
+   * @schema {userId: string, roles: string[]}
+   */
+  public static assignRole(req: Request, res: Response, next: NextFunction) {
+    const schema = Joi.object({
+      userId: Joi.string().required(),
+      roles: Joi.array().items(Joi.string()).required().min(1).unique(),
+    });
+
+    validateRequestHelper(req, res, next, schema);
+  }
 }

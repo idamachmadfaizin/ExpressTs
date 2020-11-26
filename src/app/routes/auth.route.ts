@@ -14,5 +14,6 @@ authRouter.post(`/register`, AuthValidator.register, AuthController.register);
 authRouter.post(`/login`, AuthValidator.login, AuthController.login);
 authRouter.post(`/refresh`, AuthController.refresh);
 authRouter.post(`/revoke`, AuthController.revoke);
+authRouter.post(`/assignRoles`, AuthValidator.assignRole, AuthController.assignRoles);
 
 export default authRouter;
