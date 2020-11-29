@@ -53,4 +53,9 @@ export interface IRefreshToken extends ITimestamps, Document {
 
 const REFRESH_TOKEN = model<IRefreshToken>('RefreshToken', refreshTokenSchema);
 
+/** Create this collection */
+REFRESH_TOKEN.createCollection(undefined, (err) => {
+  if (err) throw err;
+});
+
 export default REFRESH_TOKEN;

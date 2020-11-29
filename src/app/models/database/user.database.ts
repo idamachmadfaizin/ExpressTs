@@ -32,4 +32,9 @@ export interface IUser extends ITimestamps, Document {
 
 const USER = model<IUser>('User', userSchema);
 
+/** Create this collection */
+USER.createCollection(undefined, (err) => {
+  if (err) throw err;
+});
+
 export default USER;

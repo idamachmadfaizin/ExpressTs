@@ -24,4 +24,9 @@ export interface IRole extends ITimestamps, Document {
 
 const ROLE = model<IRole>('Role', roleSchema);
 
+/** Create this collection */
+ROLE.createCollection(undefined, (err) => {
+  if (err) throw err;
+});
+
 export default ROLE;
