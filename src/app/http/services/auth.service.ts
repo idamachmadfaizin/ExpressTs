@@ -6,16 +6,17 @@
 
 import bcrypt from 'bcrypt';
 import CryptoJS, { lib } from 'crypto-js';
+import { x } from 'joi';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
+import { startSession } from 'mongoose';
 import ms from 'ms';
 import { environment } from '../../../config/environment';
 import REFRESH_TOKEN from '../../models/database/refresh-token.database';
 import ROLE from '../../models/database/role.database';
-import USER_HAS_ROLES from '../../models/database/user-has-roles.database';
 import USER, { IUser } from '../../models/database/user.database';
 import {
-  IAssignRole,
+  IAssignDenyRole,
   ILogin,
 } from '../../models/interfaces/request/auth.interface';
 import { BadRequest } from '../middleware/error/bad-request';
@@ -43,7 +44,9 @@ export class AuthService {
   public static async authenticateAsync(loginReq: ILogin, ipAddress: string) {
     if (!loginReq.email && !loginReq.password && !ipAddress) return null;
 
-    const userExist = await USER.findOne({ email: loginReq.email });
+    const userExist = await USER.findOne({ email: loginReq.email }).populate(
+      'roles',
+    );
     if (!userExist) return null;
 
     const validPassword = bcrypt.compareSync(
@@ -118,11 +121,15 @@ export class AuthService {
   }
 
   /**
-   * Assign new roles to user
-   * @param assignRoles IAssignRole
+   * Replace and assign new roles to user
+   * @param assignRoles IAssignDenyRole
    */
-  public static async assignRolesAsync(assignRoles: IAssignRole) {
-    if (!assignRoles || !assignRoles?.userId || assignRoles?.roles?.length === 0)
+  public static async reAssignRolesAsync(assignRoles: IAssignDenyRole) {
+    if (
+      !assignRoles ||
+      !assignRoles?.userId ||
+      assignRoles?.roles?.length === 0
+    )
       throw new BadRequest();
 
     /** Check exist user */
@@ -133,38 +140,10 @@ export class AuthService {
     const roles = await ROLE.find({ name: { $in: assignRoles.roles } });
     if (!roles || roles?.length === 0) throw new BadRequest('Roles notfound');
 
-    /** Get exist userHasRoles by userId */
-    const existUserRoles = await USER_HAS_ROLES.find({
-      user: { _id: assignRoles.userId } as IUser,
-    }).populate('role');
+    existUser.roles = roles.map(role => role.id);
+    existUser.save();
 
-    //#region Get only not assigned role from incoming data
-    const existRoleIds = existUserRoles.map((x) => {
-      return x.role.id;
-    });
-    const incomeRoleIds = roles.map((x) => {
-      return x.id;
-    });
-    const newRoleIds = incomeRoleIds.filter((x) => {
-      return !existRoleIds.includes(x);
-    });
-    //#endregion
-
-    /** mapping to userHasRoles model */
-    const insertUserRoles = newRoleIds.map((id) => {
-      return {
-        user: assignRoles.userId,
-        role: id,
-      };
-    });
-    if (!insertUserRoles || insertUserRoles.length === 0)
-      return null;
-
-    const inserted = await USER_HAS_ROLES.insertMany(insertUserRoles);
-    const userRolesIds = inserted.map((data) => {
-      return String(data.id);
-    });
-    return userRolesIds;
+    return existUser.id;
   }
 
   /**
@@ -176,6 +155,7 @@ export class AuthService {
       {
         id: user.id,
         email: user.email,
+        roles: user.roles.map(role => role.name),
       },
       environment.TOKEN_SECRET,
       { expiresIn: environment.TOKEN_LIFETIME },

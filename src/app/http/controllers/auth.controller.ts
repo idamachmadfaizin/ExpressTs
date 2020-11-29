@@ -7,13 +7,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CookiesHelper } from '../../helpers/cookies.helper';
-import ROLE from '../../models/database/role.database';
-import USER_HAS_ROLES, {
-  IUserHasRoles,
-} from '../../models/database/user-has-roles.database';
-import USER, { IUser } from '../../models/database/user.database';
+import USER from '../../models/database/user.database';
 import {
-  IAssignRole,
+  IAssignDenyRole,
   ILogin,
   IRegister,
 } from '../../models/interfaces/request/auth.interface';
@@ -154,17 +150,17 @@ export class AuthController {
     next: NextFunction,
   ) {
     try {
-      const assignRoleReq: IAssignRole = req.body;
-      const userRolesIds = await AuthService.assignRolesAsync(assignRoleReq);
+      const assignRoleReq: IAssignDenyRole = req.body;
+      const userId = await AuthService.reAssignRolesAsync(assignRoleReq);
 
-      if (!userRolesIds)
+      if (!userId)
         return res.json(
-          new BaseResponse({ userHasRoles: [] }, 'Roles already assigned'),
+          new BaseResponse({ user: null }, 'Roles already assigned'),
         );
 
       return res.json(
         new BaseResponse(
-          { userHasRoles: userRolesIds },
+          { user: userId },
           'Roles successfully assigned',
         ),
       );

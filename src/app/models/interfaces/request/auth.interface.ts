@@ -24,9 +24,9 @@ export interface IRegister {
 }
 
 /**
- * Interface assign roles to a user
+ * Interface assign or deny roles to a user
  */
-export interface IAssignRole {
+export interface IAssignDenyRole {
   userId: string;
   roles: string[];
 }
