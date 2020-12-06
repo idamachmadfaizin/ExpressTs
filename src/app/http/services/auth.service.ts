@@ -6,15 +6,14 @@
 
 import bcrypt from 'bcrypt';
 import CryptoJS, { lib } from 'crypto-js';
-import { x } from 'joi';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
-import { startSession } from 'mongoose';
 import ms from 'ms';
 import { environment } from '../../../config/environment';
 import REFRESH_TOKEN from '../../models/database/refresh-token.database';
 import ROLE from '../../models/database/role.database';
 import USER, { IUser } from '../../models/database/user.database';
+import { IPayload } from '../../models/interfaces/payload.interface';
 import {
   IAssignDenyRole,
   ILogin,
@@ -151,15 +150,14 @@ export class AuthService {
    * @param user IUser
    */
   private static generateToken(user: IUser) {
-    return jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        roles: user.roles.map(role => role.name),
-      },
-      environment.TOKEN_SECRET,
-      { expiresIn: environment.TOKEN_LIFETIME },
-    );
+    const payload: IPayload = {
+      id: user.id,
+      email: user.email,
+      roles: user.roles.map(role => role.name),
+    };
+    return jwt.sign(payload, environment.TOKEN_SECRET, {
+      expiresIn: environment.TOKEN_LIFETIME,
+    });
   }
 
   /**

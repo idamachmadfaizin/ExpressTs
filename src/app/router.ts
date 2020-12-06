@@ -6,6 +6,7 @@
 
 import { Application, Router } from 'express';
 import { environment } from './../config/environment';
+import { StringHelper } from './helpers/string.helper';
 import authRouter from './routes/auth.route';
 import indexRouter from './routes/index.route';
 import roleRouter from './routes/role.route';
@@ -24,10 +25,8 @@ const registerRoutes: [string, Router][] = [
  * @param app Application
  */
 export function routers(app: Application) {
-  const prefix = `/api/${environment.APP_VERSION}`;
-
   registerRoutes.forEach((each) => {
     const [url, router] = each;
-    app.use(prefix + url, router);
+    app.use(StringHelper.urlPrefix(url), router);
   });
 }

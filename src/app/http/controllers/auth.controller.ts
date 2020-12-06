@@ -159,10 +159,7 @@ export class AuthController {
         );
 
       return res.json(
-        new BaseResponse(
-          { user: userId },
-          'Roles successfully assigned',
-        ),
+        new BaseResponse({ user: userId }, 'Roles successfully assigned'),
       );
     } catch (err) {
       next(err);

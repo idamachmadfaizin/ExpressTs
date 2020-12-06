@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../src/app/app';
-import { ILogin } from './../src/app/models/interfaces/login.interface';
+import { ILogin } from '../src/app/models/interfaces/request/auth.interface';
 import { basicConfig } from './basicConfig';
 
 const prefix = '/api/1.0';

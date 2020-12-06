@@ -9,6 +9,7 @@ import express, { Application } from 'express';
 import helmet from 'helmet';
 import logger from 'morgan';
 import path from 'path';
+import { auth } from './http/middleware/auth.middleware';
 import { errorHandler } from './http/middleware/error/error-handler';
 import { routers } from './router';
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(auth());
 
 /**
  * Call function to register routers
