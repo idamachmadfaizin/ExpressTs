@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/www.ts | bunyan",
+    "start:server": "run-rs",
     "start:build": "node ./build/www.js",
     "build": "del-cli --force ./build && tsc",
     "tslint": "tslint --project tsconfig.json",
