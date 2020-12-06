@@ -51,6 +51,10 @@ function config() {
       },
       {
         level: 'warn',
+        stream: process.stdout,
+      },
+      {
+        level: 'warn',
         path: `${todayDirectory}${warnPath}`,
       },
       {

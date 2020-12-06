@@ -36,10 +36,10 @@ export class CookiesHelper {
    * @param req Request
    * @param cookieOrBody if True: find from cookies, is null then find in body
    */
-  public static getRefreshToken(req: Request, cookieOrBody = true) {
+  public static getRefreshToken(req: Request, cookieOrBody = true): string | null {
     if (cookieOrBody)
-      return req.cookies?.refreshToken || req.body?.refreshToken || null;
+      return String(req.cookies?.refreshToken) || String(req.body?.refreshToken) || null;
 
-    return req.body?.refreshToken || req.cookies?.refreshToken || null;
+    return String(req.body?.refreshToken) || String(req.cookies?.refreshToken) || null;
   }
 }
