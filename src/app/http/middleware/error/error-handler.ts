@@ -5,9 +5,9 @@
  */
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import LogHelper from '../../../helpers/log.helper';
 import { BaseResponse } from '../../../models/response/base-response.model';
 import { BadRequest } from './bad-request';
+import { Forbidden } from './forbidden';
 import { GeneralError } from './general-error';
 import { NotFound } from './notfound';
 import { Unauthorized } from './unauthorized';
@@ -26,12 +26,21 @@ export function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  LogHelper.error(err);
-  if (err instanceof GeneralError) {
+  // LogHelper.error(err);
+
+  /** Global error handle */
+  if (err instanceof GeneralError)
     return res
       .status(getCode(err))
       .json(new BaseResponse(null, `Error: ${err.message}`));
-  }
+
+  /** Handle express-jwt */
+  if (err.name === 'UnauthorizedError')
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json(new BaseResponse(null, `Error: ${err.message}`));
+
+  /** Internal server error handle */
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
     .json(new BaseResponse(null, `Error: ${err.message}`));
@@ -50,6 +59,8 @@ function getCode(err: Error): number {
       return StatusCodes.NOT_FOUND;
     case err instanceof Unauthorized:
       return StatusCodes.UNAUTHORIZED;
+    case err instanceof Forbidden:
+      return StatusCodes.FORBIDDEN;
     default:
       return StatusCodes.INTERNAL_SERVER_ERROR;
   }
