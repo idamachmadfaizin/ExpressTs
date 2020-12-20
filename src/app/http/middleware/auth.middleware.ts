@@ -16,7 +16,12 @@ export function auth() {
   const prefix = StringHelper.urlPrefix;
 
   return jwt({ secret, algorithms: ['HS256'] }).unless({
-    path: [prefix('/auth/register'), prefix('/auth/login')],
+    path: [
+      /^\/docs\/.*/, /** Swagger path exclude */
+      prefix('/'),
+      prefix('/auth/register'),
+      prefix('/auth/login'),
+    ],
   });
 }
 

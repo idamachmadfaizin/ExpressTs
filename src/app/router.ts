@@ -5,19 +5,23 @@
  */
 
 import { Application, Router } from 'express';
-import { environment } from './../config/environment';
 import { StringHelper } from './helpers/string.helper';
 import authRouter from './routes/auth.route';
 import indexRouter from './routes/index.route';
 import roleRouter from './routes/role.route';
+import swaggerRouter from './routes/swagger.route';
 
 /**
  * Register your routes in HERE
+ * @param string url
+ * @param Router Router
+ * @param boolean exclude from url prefix
  */
-const registerRoutes: [string, Router][] = [
+const registerRoutes: [string, Router, boolean?][] = [
   ['/', indexRouter],
   ['/auth', authRouter],
   ['/role', roleRouter],
+  ['/docs', swaggerRouter, true],
 ];
 
 /**
@@ -26,7 +30,9 @@ const registerRoutes: [string, Router][] = [
  */
 export function routers(app: Application) {
   registerRoutes.forEach((each) => {
-    const [url, router] = each;
-    app.use(StringHelper.urlPrefix(url), router);
+    const [url, router, exclude] = each;
+    exclude
+      ? app.use(url, router)
+      : app.use(StringHelper.urlPrefix(url), router);
   });
 }
