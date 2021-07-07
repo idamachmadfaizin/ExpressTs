@@ -24,7 +24,7 @@ const refreshTokenSchema = new Schema(
 ).set('toJSON', {
   virtuals: true,
   versionKey: false,
-  transform: (doc, ret) => {
+  transform: (doc: any, ret: any) => {
     delete ret._id;
     delete ret.id;
     delete ret.user;

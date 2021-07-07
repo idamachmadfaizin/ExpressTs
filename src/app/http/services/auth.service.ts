@@ -139,7 +139,7 @@ export class AuthService {
     const roles = await ROLE.find({ name: { $in: assignRoles.roles } });
     if (!roles || roles?.length === 0) throw new BadRequest('Roles notfound');
 
-    existUser.roles = roles.map(role => role.id);
+    existUser.roles = roles;
     existUser.save();
 
     return existUser.id;
@@ -151,7 +151,7 @@ export class AuthService {
    */
   private static generateToken(user: IUser) {
     const payload: IPayload = {
-      id: user.id,
+      id: user.id ?? '',
       email: user.email,
       roles: user.roles.map(role => role.name),
     };

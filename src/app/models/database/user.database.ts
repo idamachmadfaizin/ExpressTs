@@ -21,7 +21,7 @@ const userSchema = new Schema(
 )
   /** Delete/Ignore Column if returned toJSON */
   .set('toJSON', {
-    transform: (doc, ret, options) => {
+    transform: (doc: any, ret: any, options: any) => {
       delete ret.password;
     },
   });

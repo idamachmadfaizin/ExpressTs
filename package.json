@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/www.ts | bunyan",
-    "start:server": "run-rs --keep",
+    "start:db": "npx run-rs --keep --mongod",
     "start:build": "node ./build/www.js",
     "build": "del-cli --force ./build && tsc",
     "tslint": "tslint --project tsconfig.json",
-    "test": "jest"
+    "test": "jest",
+    "test:security": "snyk test"
   },
   "keywords": [],
   "author": "",
@@ -61,6 +62,7 @@
     "del-cli": "^3.0.1",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
+    "run-rs": "^0.7.4",
     "supertest": "^6.0.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",

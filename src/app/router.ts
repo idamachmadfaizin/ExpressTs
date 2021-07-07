@@ -10,6 +10,7 @@ import authRouter from './routes/auth.route';
 import indexRouter from './routes/index.route';
 import roleRouter from './routes/role.route';
 import swaggerRouter from './routes/swagger.route';
+import userRouter from './routes/user.route';
 
 /**
  * Register your routes in HERE
@@ -21,6 +22,7 @@ const registerRoutes: [string, Router, boolean?][] = [
   ['/', indexRouter],
   ['/auth', authRouter],
   ['/role', roleRouter],
+  ['/users', userRouter],
   ['/docs', swaggerRouter, true],
 ];
 
