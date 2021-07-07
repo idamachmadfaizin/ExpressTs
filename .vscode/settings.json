@@ -8,5 +8,6 @@
     "prettier.trailingComma": "all",
     "exportall.config.relExclusion": [
         "/build"
-    ]
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

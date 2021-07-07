@@ -1,25 +1,28 @@
 import { Router } from 'express';
-import { serve, setup } from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
+import { serve, setup } from 'swagger-ui-express';
+
+function path(pathFile: string): string {
+  return `src/app/routes/${pathFile}`;
+}
 
 const swaggerOptions: swaggerJSDoc.Options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
       title: 'Node.js + MongoDB API - JWT Authentication with Refresh Tokens',
-      version: '1.0.0',
+      version: '1.0',
       description: 'A sample API',
     },
-    host: 'localhost:3000',
-    basePath: '/',
-    // servers: [
-    //   {
-    //     url: 'http://localhost:3000',
-    //   }
-    // ],
+    servers: [
+      {
+        url: '/api/1.0',
+      },
+    ]
   },
   apis: [
-    './auth.yaml',
+    path('auth.yaml'),
+    'swagger.yaml',
   ],
 };
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

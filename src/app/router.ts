@@ -19,7 +19,7 @@ import userRouter from './routes/user.route';
  * @param boolean exclude from url prefix
  */
 const registerRoutes: [string, Router, boolean?][] = [
-  ['/', indexRouter],
+  ['/', indexRouter, true],
   ['/auth', authRouter],
   ['/role', roleRouter],
   ['/users', userRouter],

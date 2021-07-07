@@ -17,7 +17,8 @@ export function auth() {
 
   return jwt({ secret, algorithms: ['HS256'] }).unless({
     path: [
-      /^\/docs\/.*/, /** Swagger path exclude */
+      /\/docs\/*/, /** Swagger path exclude */
+      '/',
       prefix('/'),
       prefix('/auth/register'),
       prefix('/auth/login'),
