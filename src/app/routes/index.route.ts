@@ -5,11 +5,17 @@
  */
 
 import { Request, Response, Router } from 'express';
+import { CRouter } from '../models/classes/router.class';
 
-const indexRouter = Router();
+export class IndexRouter extends CRouter {
+  base: string = '/';
+  exclude = true;
 
-indexRouter.get(`/`, (req: Request, res: Response) =>
-  res.send('Express + TypeScript Server is awesome!!!'),
-);
+  constructor() {
+    super();
 
-export default indexRouter;
+    this.router.get(`/`, (req: Request, res: Response) =>
+      res.send('Express + TypeScript Server is awesome!!!'),
+    );
+  }
+}

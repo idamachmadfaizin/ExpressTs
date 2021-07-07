@@ -1,34 +1,42 @@
 import { Router } from 'express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { serve, setup } from 'swagger-ui-express';
+import { CRouter } from '../models/classes/router.class';
 
-function path(pathFile: string): string {
-  return `src/app/routes/${pathFile}`;
-}
+export class SwaggerRouter extends CRouter {
+  base: string = '/docs';
+  exclude = true;
 
-const swaggerOptions: swaggerJSDoc.Options = {
-  swaggerDefinition: {
-    openapi: '3.0.2',
-    info: {
-      title: 'Node.js + MongoDB API - JWT Authentication with Refresh Tokens',
-      version: '1.0',
-      description: 'A sample API',
-    },
-    servers: [
-      {
-        url: '/api/1.0',
+  constructor() {
+    super();
+    const swaggerSpec = swaggerJSDoc(this.swaggerOptions());
+
+    this.router.use(`/`, serve, setup(swaggerSpec));
+  }
+
+  private swaggerOptions(): swaggerJSDoc.Options {
+    return {
+      swaggerDefinition: {
+        openapi: '3.0.2',
+        info: {
+          title: 'Node.js + MongoDB API - JWT Authentication with Refresh Tokens',
+          version: '1.0',
+          description: 'A sample API',
+        },
+        servers: [
+          {
+            url: '/api/1.0',
+          },
+        ],
       },
-    ],
-  },
-  apis: [
-    path('auth.yaml'),
-    'swagger.yaml',
-  ],
-};
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
+      apis: [
+        this.path('auth.yaml'),
+        'swagger.yaml',
+      ],
+    };
+  }
 
-const swaggerRouter = Router();
-
-swaggerRouter.use(`/`, serve, setup(swaggerSpec));
-
-export default swaggerRouter;
+  private path(pathFile: string): string {
+    return `src/app/routes/${pathFile}`;
+  }
+}

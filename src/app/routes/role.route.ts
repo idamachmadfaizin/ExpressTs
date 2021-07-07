@@ -1,13 +1,16 @@
-import { Router } from 'express';
 import { RoleController } from '../http/controllers/role.controller';
 import { RoleValidator } from '../http/middleware/validators/role.validator';
+import { CRouter } from '../models/classes/router.class';
 
-const roleRouter = Router();
+export class RoleRouter extends CRouter {
+  base: string = '/role';
+  constructor() {
+    super();
 
-roleRouter.get(`/`, RoleController.get);
-roleRouter.get(`/:id`, RoleController.find);
-roleRouter.post(`/add`, RoleValidator.insertUpdate, RoleController.insert);
-roleRouter.put(`/change/:id`, RoleValidator.insertUpdate, RoleController.update);
-roleRouter.delete(`/destroy/:id`, RoleController.delete);
-
-export default roleRouter;
+    this.router.get(`/`, RoleController.get);
+    this.router.get(`/:id`, RoleController.find);
+    this.router.post(`/add`, RoleValidator.insertUpdate, RoleController.insert);
+    this.router.put(`/change/:id`, RoleValidator.insertUpdate, RoleController.update);
+    this.router.delete(`/destroy/:id`, RoleController.delete);
+  }
+}

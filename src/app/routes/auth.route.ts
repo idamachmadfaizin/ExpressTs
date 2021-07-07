@@ -8,18 +8,23 @@ import { Router } from 'express';
 import { AuthController } from '../http/controllers/auth.controller';
 import { roles } from '../http/middleware/auth.middleware';
 import { AuthValidator } from '../http/middleware/validators';
+import { CRouter } from '../models/classes/router.class';
 
-const authRouter = Router();
+export class AuthRouter extends CRouter {
+  base = '/auth';
 
-authRouter.post(`/register`, AuthValidator.register, AuthController.register);
-authRouter.post(`/login`, AuthValidator.login, AuthController.login);
-authRouter.post(`/refresh`, AuthController.refresh);
-authRouter.post(`/revoke`, AuthController.revoke);
-authRouter.post(
-  `/assignRoles`,
-  roles('admin'),
-  AuthValidator.assignRole,
-  AuthController.assignRoles,
-);
+  constructor() {
+    super();
 
-export default authRouter;
+    this.router.post(`/register`, AuthValidator.register, AuthController.register);
+    this.router.post(`/login`, AuthValidator.login, AuthController.login);
+    this.router.post(`/refresh`, AuthController.refresh);
+    this.router.post(`/revoke`, AuthController.revoke);
+    this.router.post(
+      `/assignRoles`,
+      roles('admin'),
+      AuthValidator.assignRole,
+      AuthController.assignRoles,
+    );
+  }
+}

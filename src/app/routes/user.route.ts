@@ -1,12 +1,16 @@
-import { Router } from 'express';
 import { UserController } from '../http/controllers/user.controller';
 import { RoleValidator } from '../http/middleware/validators/role.validator';
+import { CRouter } from '../models/classes/router.class';
 
-const userRouter = Router();
+export class UserRouter extends CRouter {
+  base: string = '/users';
 
-userRouter.get(`/`, UserController.get);
-userRouter.get(`/:id`, UserController.find);
-userRouter.put(`/change/:id`, RoleValidator.insertUpdate, UserController.update);
-userRouter.delete(`/destroy/:id`, UserController.delete);
+  constructor() {
+    super();
 
-export default userRouter;
+    this.router.get(`/`, UserController.get);
+    this.router.get(`/:id`, UserController.find);
+    this.router.put(`/change/:id`, RoleValidator.insertUpdate, UserController.update);
+    this.router.delete(`/destroy/:id`, UserController.delete);
+  }
+}

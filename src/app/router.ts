@@ -3,27 +3,25 @@
  * @author Idam Achmad Faizin
  * @date 2020-11-21 22:01:48
  */
+import { Application } from 'express';
 
-import { Application, Router } from 'express';
 import { StringHelper } from './helpers/string.helper';
-import authRouter from './routes/auth.route';
-import indexRouter from './routes/index.route';
-import roleRouter from './routes/role.route';
-import swaggerRouter from './routes/swagger.route';
-import userRouter from './routes/user.route';
+import { CRouter } from './models/classes/router.class';
+import { AuthRouter } from './routes/auth.route';
+import { IndexRouter } from './routes/index.route';
+import { RoleRouter } from './routes/role.route';
+import { SwaggerRouter } from './routes/swagger.route';
+import { UserRouter } from './routes/user.route';
 
 /**
  * Register your routes in HERE
- * @param string url
- * @param Router Router
- * @param boolean exclude from url prefix
  */
-const registerRoutes: [string, Router, boolean?][] = [
-  ['/', indexRouter, true],
-  ['/auth', authRouter],
-  ['/role', roleRouter],
-  ['/users', userRouter],
-  ['/docs', swaggerRouter, true],
+const registerRoutes: CRouter[] = [
+  new IndexRouter(),
+  new AuthRouter(),
+  new RoleRouter(),
+  new UserRouter(),
+  new SwaggerRouter(),
 ];
 
 /**
@@ -31,10 +29,6 @@ const registerRoutes: [string, Router, boolean?][] = [
  * @param app Application
  */
 export function routers(app: Application) {
-  registerRoutes.forEach((each) => {
-    const [url, router, exclude] = each;
-    exclude
-      ? app.use(url, router)
-      : app.use(StringHelper.urlPrefix(url), router);
-  });
+  registerRoutes.forEach(({ base, router, exclude }) =>
+    app.use(exclude ? base : StringHelper.urlPrefix(base), router));
 }
