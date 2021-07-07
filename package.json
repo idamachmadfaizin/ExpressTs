@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/www.ts",
   "scripts": {
-    "start": "nodemon ./src/www.ts | bunyan",
+    "start": "nodemon",
     "start:db": "npx run-rs --keep --mongod",
     "start:build": "node ./dist/www.js",
     "build": "del-cli --force ./dist && webpack",
@@ -15,11 +15,6 @@
   "keywords": [],
   "author": "Idamachmadfaizin",
   "license": "ISC",
-  "nodemonConfig": {
-    "ignore": [
-      "tests/*"
-    ]
-  },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "bunyan": "^1.8.14",
@@ -59,8 +54,6 @@
     "@types/supertest": "^2.0.10",
     "@types/swagger-jsdoc": "^3.0.2",
     "@types/swagger-ui-express": "^4.1.2",
-    "@types/webpack": "^5.28.0",
-    "@types/webpack-node-externals": "^2.5.2",
     "del-cli": "^3.0.1",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
