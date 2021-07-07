@@ -8,7 +8,7 @@ function path(pathFile: string): string {
 
 const swaggerOptions: swaggerJSDoc.Options = {
   swaggerDefinition: {
-    openapi: '3.0.0',
+    openapi: '3.0.2',
     info: {
       title: 'Node.js + MongoDB API - JWT Authentication with Refresh Tokens',
       version: '1.0',
@@ -18,7 +18,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
       {
         url: '/api/1.0',
       },
-    ]
+    ],
   },
   apis: [
     path('auth.yaml'),

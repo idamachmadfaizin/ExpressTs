@@ -1,7 +1,37 @@
+openapi: '3.0.2'
+info:
+  title: Auth
+  version: '1.0'
 tags:
   - name: auth
     description: Authentication API
 
+components:
+  schemas:
+    user:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - confirmPassword
+      properties:
+        name:
+          type: string
+          description: User name
+          example: first
+        email:
+          type: string
+          description: User Email
+          example: first@mail.com
+        password:
+          type: string
+          description: User Password
+          example: password
+        confirmPassword:
+          type: string
+          description: User confirm Password
+          example: password
 paths:
   # [POST] Register
   /auth/register:
@@ -15,37 +45,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/definitions/user'
+              $ref: '#/components/schemas/user'
 
       responses:
         200:
           description: OK
         401:
           description: Unauthorized
-
-# definitions
-definitions:
-  user:
-    type: object
-    required:
-      - name
-      - email
-      - password
-      - confirmPassword
-    properties:
-      name:
-        type: string
-        description: User name
-        example: first
-      email:
-        type: string
-        description: User Email
-        example: first@mail.com
-      password:
-        type: string
-        description: User Password
-        example: password
-      confirmPassword:
-        type: string
-        description: User confirm Password
-        example: password
