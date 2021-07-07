@@ -3,20 +3,21 @@
  * @author Idam Achmad Faizin
  * @date 2020-11-21 22:01:29
  */
-
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express, { Application } from 'express';
 import helmet from 'helmet';
-import logger from 'morgan';
+import morgan from 'morgan';
 import path from 'path';
+
 import { auth } from './http/middleware/auth.middleware';
 import { errorHandler } from './http/middleware/error/error-handler';
-import cors from 'cors';
 import { routers } from './router';
+
 
 const app: Application = express();
 
-app.use(logger('dev'));
+app.use(morgan('combined'));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
