@@ -1,0 +1,13 @@
+{
+  "watch": [
+    "src",
+    ".env"
+  ],
+  "exec": "ts-node -r tsconfig-paths/register --transpile-only src/www.ts --trace-sync-io",
+  "ext": "js,ts,json,yaml",
+  "ignore": [
+    "test",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
+}
