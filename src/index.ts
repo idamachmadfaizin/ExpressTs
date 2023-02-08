@@ -14,7 +14,11 @@ dotenv.config();
 const app: Application = express();
 
 /** Middleware */
-app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length] Bytes'));
+app.use(
+	morgan(
+		'[:date[clf]] :method :url :status :response-time ms - :res[content-length] Bytes',
+	),
+);
 app.use(
 	cors({
 		origin: process.env.NODE_ENV ? `${process.env.BASE_URL}` : true,
@@ -65,9 +69,11 @@ function onError(error: any) {
 		case 'EACCES':
 			error(`${bind} requires elevated privileges`);
 			process.exit(1);
+			break;
 		case 'EADDRINUSE':
 			error(`${bind} is already in use`);
 			process.exit(1);
+			break;
 		default:
 			throw error;
 	}
