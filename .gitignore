@@ -67,4 +67,5 @@ typings/
 # Sequelize
 sequelize/dist/
 
-core/
+# Output
+dist/

@@ -1,14 +1,21 @@
 const path = require('path');
+const fs = require('fs');
 // const webpackNodeExternals = require('webpack-node-externals');
+const CopyPlugin = require("copy-webpack-plugin");
+
+console.log('Removing old build!');
+fs.rm(path.resolve(__dirname, 'dist'), { recursive: true }, (err) => { if(err) console.err('Error removing old build', err) });
+
+const isProduction = process.env.NODE_ENV == 'production';
 
 module.exports = {
-  entry: './src/www.ts',
-  mode: 'production',
+  entry: './src/index.ts',
+  mode: isProduction ? 'production' : 'development',
   watch: false,
   target: 'node',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'dist/webpack'),
+    filename: 'index.js',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -16,35 +23,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: [
-          'ts-loader',
-        ],
-        exclude: /node_modules/
-      }
-    ]
+        test: /\.(ts|tsx)$/i,
+        use: 'ts-loader',
+        exclude: ['/node_modules/'],
+      },
+    ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'src/assets'), to: "assets" },
+        { from: path.resolve(__dirname, 'src/public'), to: "public" },
+      ],
+    }),
+  ],
   // externals: [ webpackNodeExternals() ],
-}
-
-// const config: webpack.Configuration = {
-//   mode: 'production',
-//   entry: './src/www.ts',
-//   output: {
-//     path: path.resolve(__dirname, 'dist'),
-//     filename: 'www.js',
-//   },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.ts$/,
-//         use: [
-//           'ts-loader',
-//         ]
-//       }
-//     ]
-//   },
-//   externalsPresets: {node: true},
-//   externals: [ webpackNodeExternals() ],
-// };
-// export default config;
+};
