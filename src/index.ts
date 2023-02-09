@@ -25,8 +25,7 @@ app.use(
 		credentials: true,
 	}),
 );
-
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(hpp());
 app.use(express.json());
