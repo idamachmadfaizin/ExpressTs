@@ -9,7 +9,8 @@
 		"build:webpack:dev": "cross-env TS_NODE_PROJECT=\"webpack.tsconfig.json\" && webpack --mode=development",
 		"build:webpack:prod": "cross-env TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack --mode=production --node-env=production",
 		"dev": "node dist/webpack",
-		"lint": "eslint src"
+		"lint": "eslint src",
+		"test:security": "snyk test"
 	},
 	"keywords": [
 		"express",
