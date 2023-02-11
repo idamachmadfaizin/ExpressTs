@@ -1,7 +1,8 @@
-const path = require('path');
-const fs = require('fs');
+import * as fs from 'fs';
+import path from 'path';
+import * as webpack from 'webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 // const webpackNodeExternals = require('webpack-node-externals');
-const CopyPlugin = require('copy-webpack-plugin');
 
 // #region Removing dist
 console.info('Removing old build.');
@@ -16,7 +17,7 @@ console.info('Removing success.');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-module.exports = {
+const config: webpack.Configuration = {
 	entry: './src/index.ts',
 	mode: isProduction ? 'production' : 'development',
 	watch: false,
@@ -39,11 +40,10 @@ module.exports = {
 	},
 	plugins: [
 		new CopyPlugin({
-			patterns: [
-				{ from: path.resolve(__dirname, 'src/assets'), to: 'assets' },
-				{ from: path.resolve(__dirname, 'src/public'), to: 'public' },
-			],
+			patterns: [{ from: path.resolve(__dirname, 'src/public'), to: 'public' }],
 		}),
 	],
 	// externals: [ webpackNodeExternals() ],
 };
+
+export default config;
