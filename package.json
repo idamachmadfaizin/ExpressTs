@@ -1,7 +1,7 @@
 {
-	"name": "my-webpack-project",
+	"name": "express-ts",
 	"version": "1.0.0",
-	"description": "My webpack project",
+	"description": "The ExpressJs + Typescript + Webpack starter project",
 	"scripts": {
 		"start": "nodemon",
 		"build": "build:webpack:prod",
@@ -11,7 +11,14 @@
 		"dev": "node dist/webpack",
 		"lint": "eslint src"
 	},
-	"keywords": [],
+	"keywords": [
+		"express",
+		"expressjs",
+		"expressts",
+		"expressjs typescript",
+		"typescript",
+		"webpack"
+	],
 	"author": "Idamachmadfaizin",
 	"license": "MIT",
 	"dependencies": {
@@ -51,6 +58,7 @@
 		"eslint-plugin-import": "^2.27.5",
 		"nodemon": "^2.0.20",
 		"prettier": "^2.8.4",
+		"snyk": "^1.1100.0",
 		"ts-loader": "^9.4.2",
 		"ts-node": "^10.9.1",
 		"tsconfig-paths": "^4.1.2",
