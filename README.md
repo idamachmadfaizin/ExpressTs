@@ -6,7 +6,7 @@
 		<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png" height="70" alt="Typescript Logo" title="Typescript Logo"/>
   </a>
   <a src="https://webpack.js.org/">
-    <img src="https://webpack.js.org/site-logo.1fcab817090e78435061.svg" height="70" alt="Webpack Logo" title="Webpack Logo" />
+    <img src="https://webpack.js.org/site-logo.1fcab817090e78435061.svg" height="70" alt="Webpack Logo" title="Webpack Logo" style="background-color: rgb(43 58 66); padding: 5px" />
   </a>
 </p>
 
