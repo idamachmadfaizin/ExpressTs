@@ -1,10 +1,16 @@
 import app from './app';
 
+const port = normalizePort(process.env.APP_PORT);
+const server = app.listen(port);
+
+server.on('error', onError);
+server.on('listening', onListening);
+
 /**
  * Normalize a port into a number, string, or false.
  */
-function normalizePort(val: any) {
-	const parsePort = parseInt(val, 10);
+function normalizePort(val?: string) {
+	const parsePort = parseInt(val!, 10);
 	if (isNaN(parsePort)) return val; // named pipe
 	if (parsePort >= 0) return parsePort; // port number
 	return false;
@@ -22,15 +28,14 @@ function onError(error: any) {
 	switch (error.code) {
 		case 'EACCES':
 			error(`${bind} requires elevated privileges`);
-			process.exit(1);
 			break;
 		case 'EADDRINUSE':
 			error(`${bind} is already in use`);
-			process.exit(1);
 			break;
 		default:
 			throw error;
 	}
+	process.exit(1);
 }
 
 /**
@@ -45,9 +50,3 @@ function onListening() {
 		}`,
 	);
 }
-
-const port = normalizePort(process.env.APP_PORT);
-const server = app.listen(port);
-
-server.on('error', onError);
-server.on('listening', onListening);

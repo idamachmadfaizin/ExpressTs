@@ -1,7 +1,7 @@
+import CopyPlugin from 'copy-webpack-plugin';
 import * as fs from 'fs';
 import path from 'path';
 import * as webpack from 'webpack';
-import CopyPlugin from 'copy-webpack-plugin';
 // const webpackNodeExternals = require('webpack-node-externals');
 
 // #region Removing dist
@@ -15,11 +15,9 @@ if (fs.existsSync(distDir)) {
 console.info('Removing success.');
 // #endregion
 
-const isProduction = process.env.NODE_ENV == 'production';
-
 const config: webpack.Configuration = {
 	entry: './src/index.ts',
-	mode: isProduction ? 'production' : 'development',
+	mode: 'production',
 	watch: false,
 	target: 'node',
 	output: {

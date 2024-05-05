@@ -4,10 +4,9 @@
 	"description": "The ExpressJs + Typescript + Webpack starter project",
 	"scripts": {
 		"start": "nodemon",
-		"build": "build:webpack:prod",
+		"build": "build:webpack",
 		"build:ts": "tsc --build --clean & tsc --build",
-		"build:webpack:dev": "cross-env TS_NODE_PROJECT=\"webpack.tsconfig.json\" && webpack --mode=development",
-		"build:webpack:prod": "cross-env TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack --mode=production --node-env=production",
+		"build:webpack": "cross-env TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack",
 		"dev": "node dist/webpack",
 		"lint": "eslint src",
 		"test:security": "snyk test"
@@ -60,6 +59,7 @@
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5",
 		"typescript-eslint": "^7.8.0",
-		"webpack": "^5.91.0"
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
 	}
 }
