@@ -3,7 +3,7 @@
     "src",
     ".env"
   ],
-  "exec": "ts-node -r tsconfig-paths/register --transpile-only src/index.ts --trace-sync-io",
+  "exec": "ts-node --transpileOnly src/index.ts --trace-sync-io",
   "ext": "js,ts,json,yaml",
   "ignore": [
     "test",
