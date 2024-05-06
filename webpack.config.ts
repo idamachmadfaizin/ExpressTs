@@ -2,7 +2,6 @@ import CopyPlugin from 'copy-webpack-plugin';
 import * as fs from 'fs';
 import path from 'path';
 import * as webpack from 'webpack';
-// const webpackNodeExternals = require('webpack-node-externals');
 
 // #region Removing dist
 console.info('Removing old build.');
@@ -41,7 +40,6 @@ const config: webpack.Configuration = {
 			patterns: [{ from: path.resolve(__dirname, 'src/public'), to: 'public' }],
 		}),
 	],
-	// externals: [ webpackNodeExternals() ],
 };
 
 export default config;
