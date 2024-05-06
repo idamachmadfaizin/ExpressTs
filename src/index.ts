@@ -7,6 +7,13 @@ const server = app.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+process.on('SIGTERM', () => {
+  debug('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    debug('HTTP server closed');
+  });
+});
+
 /**
  * Normalize a port into a number, string, or false.
  */
