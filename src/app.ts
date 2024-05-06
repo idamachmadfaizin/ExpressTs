@@ -1,30 +1,20 @@
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
-import morgan from 'morgan';
 import path from 'path';
 import serveFavicon from 'serve-favicon';
+import { cors, morgan } from './middlewares';
 
 dotenv.config();
 
 const app: Application = express();
 
 /** Middleware */
-app.use(
-	morgan(
-		'[:date[clf]] :method :url :status :response-time ms - :res[content-length] Bytes',
-	),
-);
-app.use(
-	cors({
-		origin: process.env.NODE_ENV ? `${process.env.BASE_URL}` : true,
-		credentials: true,
-	}),
-);
+app.use(morgan());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(hpp());
