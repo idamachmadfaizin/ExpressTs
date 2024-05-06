@@ -6,14 +6,14 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import path from 'path';
 import serveFavicon from 'serve-favicon';
-import { cors, morgan } from './middlewares';
+import { cors, logger } from './middlewares';
 
 dotenv.config();
 
 const app: Application = express();
 
 /** Middleware */
-app.use(morgan());
+app.use(logger());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());

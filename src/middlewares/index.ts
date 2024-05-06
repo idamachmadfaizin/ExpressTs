@@ -1,2 +1,2 @@
 export * from './corsMiddleware';
-export * from './morganMiddleware';
+export * from './loggerMiddleware';
