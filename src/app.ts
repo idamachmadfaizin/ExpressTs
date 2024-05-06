@@ -32,9 +32,9 @@ app.use('/public', express.static(path.resolve(__dirname, 'public')));
 app.use(serveFavicon(path.resolve(__dirname, 'public/favicon.ico')));
 
 app.get('/', (req: Request, res: Response) => {
-	res.json({
-		version: 'v' + process.env.APP_VERSION,
-	});
+  res.json({
+    version: 'v' + process.env.APP_VERSION,
+  });
 });
 
 export default app;
