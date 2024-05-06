@@ -15,7 +15,7 @@ const app: Application = express();
 /** Middleware */
 app.use(logger());
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(hpp());
 app.use(express.json());
