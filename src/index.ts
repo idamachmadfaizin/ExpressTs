@@ -1,4 +1,5 @@
 import app from './app';
+import debug from './utils/debug';
 
 const port = normalizePort(process.env.APP_PORT);
 const server = app.listen(port);
@@ -45,7 +46,7 @@ function onError(error: any) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `${addr?.port}`;
-  console.info(
+  debug(
     `⚡[Server]: Listening at ${
       isNaN(+bind) ? bind : `${process.env.APP_URL}:${bind}`
     }`,

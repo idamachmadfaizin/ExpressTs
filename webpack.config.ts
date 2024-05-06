@@ -1,17 +1,20 @@
 import CopyPlugin from 'copy-webpack-plugin';
+import debugging from 'debug';
 import * as fs from 'fs';
 import path from 'path';
 import * as webpack from 'webpack';
 
+const debug = debugging('webpack');
+
 // #region Removing dist
-console.info('Removing old build.');
+debug('Removing old build.');
 const distDir = path.resolve(__dirname, 'dist');
 if (fs.existsSync(distDir)) {
   fs.rm(distDir, { recursive: true }, (err) => {
-    if (err) console.error('Error removing old build', err);
+    if (err) debug('Error removing old build', err);
   });
 }
-console.info('Removing success.');
+debug('Removing success.');
 // #endregion
 
 const config: webpack.Configuration = {
