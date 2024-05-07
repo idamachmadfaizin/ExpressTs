@@ -26,10 +26,10 @@ app.use(compression());
  * Static File
  * Example: http://localhost:3000/public/favicon.ico
  */
-app.use('/public', express.static(path.resolve(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 /** Set favicon file */
-app.use(serveFavicon(path.resolve(__dirname, 'public/favicon.ico')));
+app.use(serveFavicon(path.join(__dirname, 'public/favicon.ico')));
 
 app.get('/', (req: Request, res: Response) => {
   res.json({

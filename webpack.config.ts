@@ -8,7 +8,7 @@ const debug = debugging('webpack');
 
 // #region Removing dist
 debug('Removing old build.');
-const distDir = path.resolve(__dirname, 'dist');
+const distDir = path.join(__dirname, 'dist');
 if (fs.existsSync(distDir)) {
   fs.rm(distDir, { recursive: true }, (err) => {
     if (err) debug('Error removing old build', err);
@@ -23,7 +23,7 @@ const config: webpack.Configuration = {
   watch: false,
   target: 'node',
   output: {
-    path: path.resolve(__dirname, 'dist/webpack'),
+    path: path.join(__dirname, 'dist/webpack'),
     filename: 'index.js',
   },
   resolve: {
@@ -40,7 +40,7 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: path.resolve(__dirname, 'src/public'), to: 'public' }],
+      patterns: [{ from: path.join(__dirname, 'src/public'), to: 'public' }],
     }),
   ],
 };
