@@ -7,7 +7,7 @@
     "build": "set DEBUG=webpack & webpack",
     "build:ts": "tsc --build --clean & tsc --build",
     "build:webpack": "set DEBUG=webpack & webpack",
-    "dev": "node dist/webpack",
+    "build:start": "set DEBUG=http & node dist/webpack",
     "lint": "eslint src",
     "test:security": "snyk test"
   },
