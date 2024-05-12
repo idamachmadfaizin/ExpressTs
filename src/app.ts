@@ -1,10 +1,11 @@
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import path from 'path';
+import pug from 'pug';
 import serveFavicon from 'serve-favicon';
 import { cors, logger } from './middlewares';
 
@@ -31,7 +32,18 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 /** Set favicon file */
 app.use(serveFavicon(path.join(__dirname, 'public/favicon.ico')));
 
+/** Template engine */
+app.engine('pug', pug.__express);
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 app.get('/', (req: Request, res: Response) => {
+  if (req.accepts().includes('text/html'))
+    return res.render('index', {
+      title: 'Hey',
+      message: 'Hello world',
+    });
+
   res.json({
     version: 'v' + process.env.APP_VERSION,
   });

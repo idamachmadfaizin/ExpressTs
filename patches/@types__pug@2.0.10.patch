@@ -1,0 +1,23 @@
+diff --git a/index.d.ts b/index.d.ts
+index 3d1f23653419609ce319f9271c4e92a9e10b1990..733a78a54b06afa6d9c45f5bfe088d746544f0b0 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -124,6 +124,18 @@ declare module "pug" {
+         callback: (err: Error | null, html: string) => void,
+     ): void;
+ 
++    /**
++     * Express support.
++     * @param path the path.
++     * @param {(Options & LocalsObject)} options Pug Options and rendering locals
++     * @param {((err: Error | null, html: string) => void)} fn Node.js-style callback receiving the rendered results. This callback is called synchronously. 
++     */
++    export function __express(
++        path: string, 
++        options: Options & LocalsObject, 
++        fn: (err: Error | null, html: string) => void,
++    ): void;
++
+     ///////////////////
+     ///    Types    ///
+     ///////////////////

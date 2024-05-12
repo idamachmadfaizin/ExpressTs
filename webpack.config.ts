@@ -1,30 +1,32 @@
 import CopyPlugin from 'copy-webpack-plugin';
 import debugging from 'debug';
-import * as fs from 'fs';
+import fs from 'fs';
 import path from 'path';
-import * as webpack from 'webpack';
+import webpack from 'webpack';
 
 const debug = debugging('webpack');
 
-// #region Removing dist
-debug('Removing old build.');
-const distDir = path.join(__dirname, 'dist');
-if (fs.existsSync(distDir)) {
-  fs.rm(distDir, { recursive: true }, (err) => {
-    if (err) debug('Error removing old build', err);
-  });
+const isProd = process.env.NODE_ENV === 'production';
+
+if (isProd) {
+  // #region Removing dist
+  debug('Removing old build.');
+  const distDir = path.join(__dirname, 'dist');
+  if (fs.existsSync(distDir)) {
+    fs.rm(distDir, { recursive: true }, (err) => {
+      if (err) debug('Error removing old build', err);
+    });
+  }
+  debug('Removing success.');
+  // #endregion
 }
-debug('Removing success.');
-// #endregion
 
 const config: webpack.Configuration = {
-  entry: './src/index.ts',
-  mode: 'production',
-  watch: false,
+  entry: path.join(__dirname, 'src', 'index.ts'),
+  mode: isProd ? 'production' : 'development',
   target: 'node',
   output: {
-    path: path.join(__dirname, 'dist/webpack'),
-    filename: 'index.js',
+    path: path.join(__dirname, 'dist'),
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -40,7 +42,10 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: path.join(__dirname, 'src/public'), to: 'public' }],
+      patterns: [
+        { from: path.join(__dirname, 'src/public'), to: 'public' },
+        { from: path.join(__dirname, 'src/views'), to: 'views' },
+      ],
     }),
   ],
 };
