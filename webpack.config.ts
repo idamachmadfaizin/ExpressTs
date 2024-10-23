@@ -45,6 +45,7 @@ const config: webpack.Configuration = {
       patterns: [
         { from: path.join(__dirname, 'src/public'), to: 'public' },
         { from: path.join(__dirname, 'src/views'), to: 'views' },
+        { from: path.join(__dirname, '.env') },
       ],
     }),
   ],
